@@ -2,8 +2,8 @@
 ### 学习算法的最好机会是十年前，其次是现在。
 
 ## 目录
-1. [基础](./1.Fundamentals)
-    1. [基础编程模型](./1.Fundamentals/1.1.BasicProgrammingModel)
+- [1.基础](./1.Fundamentals)
+    - [1.1.基础编程模型](./1.Fundamentals/1.1.BasicProgrammingModel)
 
 
 ### 2017-04-10
