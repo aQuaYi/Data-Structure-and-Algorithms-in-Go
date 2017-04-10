@@ -7,3 +7,4 @@
 [1.1.5](./1.1.5.DoubleCheck/main.go)
 [1.1.6](./1.1.6.PrintWhat/main.go)
 [1.1.7](./1.1.7.PrintValue/main.go)
+[1.1.8](./1.1.8.PrintChar/main.go)
