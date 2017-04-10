@@ -3,9 +3,9 @@
 
 ## 目录
 1. [基础](./1.Fundamentals)
-    1.1. [基础编程模型](./1.Fundamentals/1.1.BasicProgrammingModel)
+    1. [基础编程模型](./1.Fundamentals/1.1.BasicProgrammingModel)
 
-    
+
 ### 2017-04-10
 经过这几天的思考，我计划采用最笨最慢的方法，每周学习本书的一个章节。到2017年9月25日，可以完成本书前5章的学习。
 
