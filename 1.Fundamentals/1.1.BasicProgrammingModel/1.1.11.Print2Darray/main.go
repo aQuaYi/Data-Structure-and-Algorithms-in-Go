@@ -70,7 +70,7 @@ func printBool(b bool) {
 }
 
 func printSpace(width int) {
-	if width == 0 {
+	if width == 0 { //不添加这一个话，0列和1列的星号会挨在一起。
 		width++
 	}
 	for i := 0; i < width; i++ {
