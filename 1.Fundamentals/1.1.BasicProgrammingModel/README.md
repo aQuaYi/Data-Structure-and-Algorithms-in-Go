@@ -19,6 +19,6 @@
 * [1.1.16](./1.1.16.exR1/main.go)
 * 1.1.17 书本已经给出答案了。
 * [1.1.18](./1.1.18.mystery/main.go)
-* [] [1.1.19](./1.1.19.Fibonacci/main.go)
+* [ ] [1.1.19](./1.1.19.Fibonacci/main.go)
 * [1.1.20](./1.1.20.ln/main.go)
-* [] [1.1.21](./1.1.21.ScanAndPrint/main.go)
+* [ ] [1.1.21](./1.1.21.ScanAndPrint/main.go)
