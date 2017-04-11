@@ -12,4 +12,6 @@
 * [1.1.9](./1.1.9.IntToBinaryString/main.go)
 * [1.1.10](./1.1.10.WhatsWrong/main.go)
 * [1.1.11](./1.1.11.Print2Darray/main.go)
-* [1.1.12]()
+* [1.1.12](./1.1.12.PrintWhat/main.go)
+* [1.1.13](./1.1.13.Transposition/main.go)
+* [1.1.14](./1.1.14.lg/main.go)
