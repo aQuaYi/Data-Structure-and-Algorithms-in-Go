@@ -16,43 +16,25 @@ func main() {
 		fmt.Println("读取白名单失败：", err)
 		os.Exit(1)
 	}
-	opt := os.Args[2]
-	if !(opt == "+" || opt == "-") {
-		fmt.Println("第二个参数应为“+”或者“-”")
-		os.Exit(1)
-	}
-	if opt == "+" {
-		fmt.Println("接下来，会打印出*不*在白名单上的值。")
-	} else {
-
-		fmt.Println("接下来，会打印出在白名单上的值。")
-	}
 
 	sort.Ints(whiteList)
 
-	str := ""
-	for {
-		if _, err := fmt.Scanln(&str); err != nil {
-			if err == io.EOF {
-				fmt.Println("读取结束。")
-				break
-			}
-			fmt.Println(str, "无法读取", err)
-		}
-		t, err := strconv.Atoi(str)
-		if err != nil {
-			fmt.Println("读取的内容无法转换成整数", str, err)
-		}
-		r := rank(t, whiteList)
-
-		switch {
-		case opt == "+" && r == -1:
-			fmt.Println(t)
-		case opt == "-" && r != -1:
-			fmt.Println(t)
-		}
-		str = ""
+	for i := 0; i < len(whiteList); i++ {
+		fmt.Println(i+1, whiteList[i])
 	}
+	fmt.Println("rank(9)=", rank(9, whiteList))
+	fmt.Println("rank(14)=", rank(14, whiteList))
+	fmt.Println("rank(20)=", rank(20, whiteList))
+	fmt.Println("rank(50)=", rank(50, whiteList))
+	fmt.Println("rank(51)=", rank(51, whiteList))
+	fmt.Println("rank(98)=", rank(98, whiteList))
+	fmt.Println("rank(101)=", rank(101, whiteList))
+
+	fmt.Println("count(12)=", count(12, whiteList))
+	fmt.Println("count(20)=", count(20, whiteList))
+	fmt.Println("count(50)=", count(50, whiteList))
+	fmt.Println("count(98)=", count(98, whiteList))
+	fmt.Println("count(99)=", count(99, whiteList))
 }
 
 func readInts(filename string) ([]int, error) {
@@ -90,15 +72,26 @@ func rank(key int, a []int) int {
 
 func rankRecur(key int, a []int, lo, hi int) int {
 	if lo > hi {
-		return -1
+		return lo
 	}
 	mid := (lo + hi) / 2
 	switch {
-	case a[mid] > key:
+	case a[mid] >= key:
 		return rankRecur(key, a, lo, mid-1)
-	case a[mid] < key:
-		return rankRecur(key, a, mid+1, hi)
 	default:
-		return mid
+		return rankRecur(key, a, mid+1, hi)
 	}
+}
+
+func count(key int, a []int) int {
+	result := 0
+	begin := rank(key, a)
+	for i := begin; i < len(a); i++ {
+		if a[i] == key {
+			result++
+		} else {
+			break
+		}
+	}
+	return result
 }

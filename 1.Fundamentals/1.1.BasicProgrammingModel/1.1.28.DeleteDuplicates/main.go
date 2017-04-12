@@ -21,14 +21,19 @@ func main() {
 		fmt.Println("第二个参数应为“+”或者“-”")
 		os.Exit(1)
 	}
+
+	whiteList = deleteDuplicates(whiteList)
+	sort.Ints(whiteList)
+
+	for i := 0; i < len(whiteList); i++ {
+		fmt.Println(whiteList[i])
+	}
+
 	if opt == "+" {
 		fmt.Println("接下来，会打印出*不*在白名单上的值。")
 	} else {
-
 		fmt.Println("接下来，会打印出在白名单上的值。")
 	}
-
-	sort.Ints(whiteList)
 
 	str := ""
 	for {
@@ -101,4 +106,16 @@ func rankRecur(key int, a []int, lo, hi int) int {
 	default:
 		return mid
 	}
+}
+
+func deleteDuplicates(a []int) []int {
+	temp := make(map[int]struct{})
+	for i := 0; i < len(a); i++ {
+		temp[a[i]] = struct{}{}
+	}
+	result := []int{}
+	for key := range temp {
+		result = append(result, key)
+	}
+	return result
 }
