@@ -8,29 +8,38 @@ func Dot(x, y []float64) float64 {
 	return result
 }
 
-func Transpose(m [][]float64) [][]float64 {
+func Transpose(a [][]float64) [][]float64 {
 	result := [][]float64{}
-	for i := 0; i < len(m); i++ {
-		result = append(result, make([]float64, len(m)))
-		for j := 0; j < len(m[i]); j++ {
-			result[i][j] = m[j][i]
+	for i := 0; i < len(a); i++ {
+		result = append(result, make([]float64, len(a)))
+		for j := 0; j < len(a[i]); j++ {
+			result[i][j] = a[j][i]
 		}
 	}
 	return result
 }
 
-func Mult(x, y [][]float64) [][]float64 {
+func Mult(a, b [][]float64) [][]float64 {
 	result := [][]float64{}
-	y = Transpose(y)
-	for i := 0; i < len(x); i++ {
-		result = append(result, make([]float64, len(y)))
-		for j := 0; j < len(y); j++ {
-			result[i][j] = Dot(x[i], y[j])
+	b = Transpose(b)
+	for i := 0; i < len(a); i++ {
+		result = append(result, make([]float64, len(b)))
+		for j := 0; j < len(b); j++ {
+			result[i][j] = Dot(a[i], b[j])
 		}
 	}
 	return result
 }
 
-func MatrixMultArray(m [][]float64, a []float64) []float64 {
+func MatrixMultArray(a [][]float64, x []float64) []float64 {
+	result := make([]float64, len(a))
+	for i := 0; i < len(a); i++ {
+		result[i] = Dot(a[i], x)
+	}
+	return result
+}
 
+func ArrayMultMatrix(y []float64, a [][]float64) []float64 {
+	a = Transpose(a)
+	return MatrixMultArray(a, y)
 }

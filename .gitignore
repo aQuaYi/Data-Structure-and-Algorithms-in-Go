@@ -26,3 +26,4 @@ debug
 *.txt
 *.csv
 out.png
+.vscode
