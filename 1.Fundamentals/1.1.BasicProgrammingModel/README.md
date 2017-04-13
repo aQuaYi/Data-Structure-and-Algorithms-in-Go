@@ -32,3 +32,5 @@
 * [1.1.29](./1.1.29.EqualKeys/main.go)
 * [1.1.30](./1.1.30.ArrayExercise/main.go)
 * [1.1.31](./1.1.31.RandConnection/main.go)
+* [1.1.32]
+* [1.1.33](./1.1.33.Matrix/matrix.go)
