@@ -10,9 +10,9 @@ func Dot(x, y []float64) float64 {
 
 func Transpose(a [][]float64) [][]float64 {
 	result := [][]float64{}
-	for i := 0; i < len(a); i++ {
+	for i := 0; i < len(a[0]); i++ {
 		result = append(result, make([]float64, len(a)))
-		for j := 0; j < len(a[i]); j++ {
+		for j := 0; j < len(a); j++ {
 			result[i][j] = a[j][i]
 		}
 	}
