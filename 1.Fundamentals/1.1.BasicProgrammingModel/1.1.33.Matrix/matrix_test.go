@@ -35,7 +35,8 @@ var (
 )
 
 func Test_Dot(t *testing.T) {
-	if Dot(x, y) != 24.0 {
+	newD, _ := Dot(x, y)
+	if newD != 24.0 {
 		t.Error("Dot()无法通过测试")
 	}
 }
@@ -52,7 +53,7 @@ func Test_Transpose(t *testing.T) {
 }
 
 func Test_Mult(t *testing.T) {
-	ab := Mult(a, b)
+	ab, _ := Mult(a, b)
 	for i := 0; i < len(ab); i++ {
 		for j := 0; j < len(ab[i]); j++ {
 			if ab[i][j] != amb[i][j] {
@@ -62,8 +63,8 @@ func Test_Mult(t *testing.T) {
 	}
 }
 
-func Test_MatrixMultArray(t *testing.T) {
-	newAX := MatrixMultArray(a, x)
+func Test_MultArray(t *testing.T) {
+	newAX, _ := MultArray(a, x)
 	for i := 0; i < len(newAX); i++ {
 		if newAX[i] != ax[i] {
 			t.Error("MatrixMultArray()无法通过测试。")
@@ -72,7 +73,7 @@ func Test_MatrixMultArray(t *testing.T) {
 }
 
 func Test_ArrayMultMatrix(t *testing.T) {
-	newYB := ArrayMultMatrix(y, b)
+	newYB, _ := ArrayMultMatrix(y, b)
 	for i := 0; i < len(yb); i++ {
 		if newYB[i] != yb[i] {
 			t.Error("ArrayMultMatrix()无法通过测试")
