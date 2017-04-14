@@ -5,7 +5,7 @@ import (
 	"math"
 	"math/rand"
 )
-
+//SIDES 是骰子的面数
 const SIDES = 6
 
 type doubleDice [2*SIDES + 1]float64
