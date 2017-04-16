@@ -39,3 +39,4 @@
 * [1.1.36](./1.1.36.ShuffleTest/main.go)
 * [1.1.37](./1.1.37.BadShuffleTest/main.go)
 * [1.1.38](./1.1.38.BvB)
+* [1.1.39]()
