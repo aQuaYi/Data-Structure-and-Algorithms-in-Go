@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -17,43 +18,33 @@ func main() {
 		fmt.Println("读取白名单失败：", err)
 		os.Exit(1)
 	}
-	opt := os.Args[2]
-	if !(opt == "+" || opt == "-") {
-		fmt.Println("第二个参数应为“+”或者“-”")
-		os.Exit(1)
-	}
-	if opt == "+" {
-		fmt.Println("接下来，会打印出*不*在白名单上的值。")
-	} else {
-
-		fmt.Println("接下来，会打印出在白名单上的值。")
-	}
 
 	sort.Ints(whiteList)
+	beginTime := time.Now()
+	count := 0
 
-	str := ""
 	for {
+		str := ""
 		if _, err := fmt.Scanln(&str); err != nil {
 			if err == io.EOF {
 				fmt.Println("读取结束。")
 				break
 			}
 			fmt.Println(str, "无法读取", err)
+			continue
 		}
+
 		t, err := strconv.Atoi(str)
 		if err != nil {
 			fmt.Println("读取的内容无法转换成整数", str, err)
 		}
 		r := rank(t, whiteList)
-
-		switch {
-		case opt == "+" && r == -1:
-			fmt.Println(t)
-		case opt == "-" && r != -1:
-			fmt.Println(t)
+		if r != -1 {
+			count++
 		}
-		str = ""
 	}
+	fmt.Printf("一共找到%d个数字在白名单内\n", count)
+	fmt.Println("总耗时:", time.Since(beginTime))
 }
 
 func readInts(filename string) ([]int, error) {
@@ -70,7 +61,7 @@ func readInts(filename string) ([]int, error) {
 	//将文件作为一个io.Reader对象进行buffered I/O操作
 	br := bufio.NewReader(f)
 	for {
-		//每次读取一行
+		//每次读取一
 		line, _, err := br.ReadLine()
 		if err == io.EOF {
 			break
@@ -87,20 +78,10 @@ func readInts(filename string) ([]int, error) {
 }
 
 func rank(key int, a []int) int {
-	return rankRecur(key, a, 0, len(a)-1)
-}
-
-func rankRecur(key int, a []int, lo, hi int) int {
-	if lo > hi {
-		return -1
+	for i, v := range a {
+		if v == key {
+			return i
+		}
 	}
-	mid := (lo + hi) / 2
-	switch {
-	case a[mid] > key:
-		return rankRecur(key, a, lo, mid-1)
-	case a[mid] < key:
-		return rankRecur(key, a, mid+1, hi)
-	default:
-		return mid
-	}
+	return -1
 }

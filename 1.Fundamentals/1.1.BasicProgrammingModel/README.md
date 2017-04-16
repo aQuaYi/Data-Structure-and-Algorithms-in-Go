@@ -32,9 +32,10 @@
 * [1.1.29](./1.1.29.EqualKeys/main.go)
 * [1.1.30](./1.1.30.ArrayExercise/main.go)
 * [1.1.31](./1.1.31.RandConnection/main.go)
-* [1.1.32]
+* [1.1.32](./1.1.32.Histogram/largeT.txt)
 * [1.1.33](./1.1.33.Matrix/matrix.go)
 * [1.1.34]1.不需要，2.需要，3.不需要，4.不需要，5.不需要，6.需要，7.需要，8.需要。
 * [1.1.35](./1.1.35.DiceSimulation/main.go)
 * [1.1.36](./1.1.36.ShuffleTest/main.go)
 * [1.1.37](./1.1.37.BadShuffleTest/main.go)
+* [1.1.38](./1.1.38.BvB)
