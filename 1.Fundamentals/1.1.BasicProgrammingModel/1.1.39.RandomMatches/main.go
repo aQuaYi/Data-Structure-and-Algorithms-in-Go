@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -24,6 +25,7 @@ func main() {
 		count := 0.
 		for i := 0; i < t; i++ {
 			sA := makeInts(n)
+			sort.Ints(sA)
 			sB := makeInts(n)
 			for _, v := range sB {
 				if rank(v, sA) != -1 {
