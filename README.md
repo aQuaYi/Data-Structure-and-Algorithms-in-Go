@@ -4,7 +4,10 @@
 ## 目录
 - [1.基础](./1.Fundamentals)
     - [1.1.基础编程模型](./1.Fundamentals/1.1.BasicProgrammingModel)
+    - [1.2.数据抽象](./1.Fundamentals/1.2.DataAbstraction)
 
+### 2017-04-17
+编写了一个tamplate.go来自动生成某个小节的答案模板文件和README.md文件。自动化处理就是爽。
 
 ### 2017-04-12
 经过这两天的做题，我才发现我应该把其中一部分习题封装成库的。这样，就可以使用测试文件来验证了。很多题目也是相通的，不用重复劳动。
