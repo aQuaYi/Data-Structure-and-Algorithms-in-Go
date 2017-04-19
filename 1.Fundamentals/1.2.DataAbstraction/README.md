@@ -25,4 +25,4 @@
 >
 >We understand that this is a point of contention. There are many things in the Go language and libraries that differ from modern practices, simply because we feel it's sometimes worth trying a different approach.
 * [1.2.18](./1.2.18/main.go) 我利用[百度百科](http://baike.baidu.com/item/%E6%A0%87%E5%87%86%E5%81%8F%E5%B7%AE)页面介绍的求样本方差和标准差的方法，进行了对比求解，发现两者的对比不大，反而是利用了"math/big"包进行精确计算的结果，与两者相差较大。我不知道是由于Golang和Java的表示方式不一样，还是什么原因引起的。
-* [1.2.19](./1.2.19/main.go)
+* 1.2.19 略
