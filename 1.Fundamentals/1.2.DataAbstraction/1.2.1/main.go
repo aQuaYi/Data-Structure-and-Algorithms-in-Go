@@ -7,8 +7,9 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/fogleman/gg"
 	"time"
+
+	"github.com/fogleman/gg"
 )
 
 func main() {
@@ -23,7 +24,7 @@ func main() {
 	}
 
 	const S = 1000
-rand.Seed(time.Now().UnixNano())
+	rand.Seed(time.Now().UnixNano())
 	ps := []gg.Point{}
 	for i := 0; i < n; i++ {
 		ps = append(ps, gg.Point{
