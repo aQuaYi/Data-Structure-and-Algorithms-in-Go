@@ -26,7 +26,7 @@ func (c *Counter) Increment() {
 	c.mutex.Unlock()
 }
 
-//Tally 返回计数器的吃书次数
+//Tally 返回计数器的次数
 func (c *Counter) Tally() int {
 	return c.number
 }
