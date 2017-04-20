@@ -5,6 +5,10 @@
 - [1.基础](./1.Fundamentals)
     - [1.1.基础编程模型](./1.Fundamentals/1.1.BasicProgrammingModel)
     - [1.2.数据抽象](./1.Fundamentals/1.2.DataAbstraction)
+    - [1.3.背包、队列和栈](./1.Fundamentals/1.3.BagsQueuesAndStacks)
+
+### 2017-04-20
+1.2小节还是有几题没有做，我就开始1.3了
 
 ### 2017-04-17
 编写了一个tamplate.go来自动生成某个小节的答案模板文件和README.md文件。自动化处理就是爽。
