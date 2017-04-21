@@ -7,6 +7,9 @@
     - [1.2.数据抽象](./1.Fundamentals/1.2.DataAbstraction)
     - [1.3.背包、队列和栈](./1.Fundamentals/1.3.BagsQueuesAndStacks)
 
+### 2017-04-21
+今天其他事情比较忙，也没有心情做习题。不过，我看到了一篇好文章[《Go coding in go way》](http://tonybai.com/2017/04/20/go-coding-in-go-way/?utm_source=tuicool&utm_medium=referral)。觉得写的很好。还把里面的程序自己写了一遍。
+
 ### 2017-04-20
 1.2小节还是有几题没有做，我就开始1.3了。
 
