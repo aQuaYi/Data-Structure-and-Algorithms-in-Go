@@ -1,93 +1,62 @@
-package queue 
+package queue
 
-import (
-	"sync"
-	"testing"
-)
+import "testing"
 
-func TestPropertyInitialValue(t *testing.T) {
-	prop := NewProperty(10)
-	if val := prop.Value(); val != 10 {
-		t.Fatalf("Expecting 10 but got %#v\n", val)
-	}
-	stream := prop.Observe()
-	for i := 0; i <= 100; i++ {
-		if val := stream.Value(); val != 10 {
-			t.Fatalf("Expecting 10 but got %#v\n", val)
-		}
+var Q queue
+
+func Test_Queue_new(t *testing.T) {
+	q := New()
+	if !q.IsEmpty() {
+		t.Error("新生成的Queue不是空的")
 	}
 }
 
-func TestPropertyInitialObserve(t *testing.T) {
-	prop := NewProperty(10)
-	var prevStream Stream
-	for i := 0; i <= 100; i++ {
-		stream := prop.Observe()
-		if stream == prevStream {
-			t.Fatalf("Expecting different stream\n")
-		}
-		if val := stream.Value(); val != 10 {
-			t.Fatalf("Expecting 10 but got %#v\n", val)
-		}
-		prevStream = stream
+func Test_Queue_Enqueue(t *testing.T) {
+	Q.Enqueue(1)
+	if Q.first != Q.last {
+		t.Fatal("向空Queue中Enqueue第一个元素时，Q.first和Q.last没有指向同一个node。")
 	}
 }
 
-func TestPropertyObserveAfterUpdate(t *testing.T) {
-	prop := NewProperty(10)
-	if val := prop.Value(); val != 10 {
-		t.Fatalf("Expecting 10 but got %#v\n", val)
+func Test_Queue_Dequeue(t *testing.T) {
+	item, ok := Q.Dequeue().(int)
+	if !ok {
+		t.Error("queue没能正确地转换出queue中节点的类型。")
 	}
-	prop.Update(15)
-	if val := prop.Value(); val != 15 {
-		t.Fatalf("Expecting 15 but got %#v\n", val)
+	if item != 1 {
+		t.Error("queue没能正确地Dequeue出1")
 	}
-	stream := prop.Observe()
-	if val := stream.Value(); val != 15 {
-		t.Fatalf("Expecting 15 but got %#v\n", val)
+
+	if !Q.IsEmpty() {
+		t.Error("queue在dequeue最后一个node后，不是empty的")
 	}
 }
 
-func TestPropertyMultipleConcurrentReaders(t *testing.T) {
-	initial := 1000
-	final := 2000
-	prop := NewProperty(initial)
-	var cherrs []chan error
-	for i := 0; i < 1000; i++ {
-		cherr := make(chan error, 1)
-		cherrs = append(cherrs, cherr)
-		go testStreamRead(prop.Observe(), initial, final, cherr)
-	}
-	done := make(chan bool)
-	go func(prop Property, initial, final int, done chan bool) {
-		defer close(done)
-		for i := initial + 1; i <= final; i++ {
-			prop.Update(i)
-		}
-	}(prop, initial, final, done)
-	for _, cherr := range cherrs {
-		if err := <-cherr; err != nil {
-			t.Fatal(err)
-		}
-	}
-	<-done
-}
+func Test_Queue_Iterator(t *testing.T) {
+	N := 1000
 
-func TestPropertyMultipleConcurrentReadersWriters(t *testing.T) {
-	wg := &sync.WaitGroup{}
-	writer := func(prop Property, times int) {
-		defer wg.Done()
-		for i := 0; i <= times; i++ {
-			val := prop.Value().(int)
-			prop.Update(val + 1)
-			prop.Observe()
+	for i := 0; i < N; i++ {
+		Q.Enqueue(i)
+	}
+
+	if Q.Size() != N {
+		t.Errorf("queue没能完全地Enqueue入%d个数字", N)
+	}
+
+	c := Q.Iterator()
+	i := 0
+	for c.HasNext() {
+		item := c.Next().(int)
+		if item != i {
+			t.Error("queue生成的迭代器不能按顺序迭代")
 		}
+		i++
 	}
-	prop := NewProperty(0)
-	times := 1000
-	for i := 0; i < 1000; i++ {
-		wg.Add(1)
-		go writer(prop, times)
+	if i != N {
+		t.Error("queue生成的迭代器没有完成全部迭代。")
 	}
-	wg.Wait()
+
+	if Q.Size() != N {
+		t.Error("迭代后，影响了Q的长度。")
+	}
 }

@@ -2,7 +2,7 @@ package queue
 
 import "testing"
 
-func testStateNew(t *testing.T, node *node, val interface{}) {
+func testNodeNew(t *testing.T, node *node, val interface{}) {
 
 	if node.item != val {
 		t.Fatalf("Expecting %#v but got %#v\n", val, node.item)
@@ -12,7 +12,7 @@ func testStateNew(t *testing.T, node *node, val interface{}) {
 	}
 }
 
-func TestStateNew(t *testing.T) {
-	state := newState(10)
-	testStateNew(t, state, 10)
+func TestNodeNew(t *testing.T) {
+	node := newNode(10)
+	testNodeNew(t, node, 10)
 }
