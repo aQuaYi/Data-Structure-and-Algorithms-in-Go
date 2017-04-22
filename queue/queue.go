@@ -38,8 +38,8 @@ func (q *queue) Enqueue(item interface{}) {
 	defer q.Unlock()
 	oldLast := q.last
 	q.last = newNode(item)
-	if q.n == 0 {
-		q.first = q.last
+	if q.n == 0 { //当空队列enqueue入第一个node的时候。
+		q.first = q.last //first和last都指向同一个node
 	} else {
 		oldLast.next = q.last
 	}
@@ -51,8 +51,8 @@ func (q *queue) Dequeue() interface{} {
 	defer q.Unlock()
 	item := q.first.item
 	q.first = q.first.next
-	if q.n == 1 {
-		q.last = nil
+	if q.first == nil { //如果连first都为nil，说明队列空了。
+		q.last = nil //需要把last设置为nil
 	}
 	q.n--
 	return item
