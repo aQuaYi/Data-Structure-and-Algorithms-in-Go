@@ -19,7 +19,7 @@ func main() {
 }
 
 func evaluatePostfix(s string) float64 {
-	strs := stack.New()
+	fs := stack.New()
 	ops := stack.New()
 
 	ss := strings.Split(s, " ")
@@ -30,26 +30,31 @@ func evaluatePostfix(s string) float64 {
 		case "+", "-", "*", "/":
 			ops.Push(v)
 		case ")":
-			b, _ := strconv.ParseFloat(strs.Pop().(string), 64)
-			a, _ := strconv.ParseFloat(strs.Pop().(string), 64)
+			b := fs.Pop().(float64)
+			a := fs.Pop().(float64)
 			op := ops.Pop().(string)
 			switch op {
 			case "+":
-				strs.Push(fmt.Sprint(a + b))
+				fs.Push(a + b)
 			case "-":
-				strs.Push(fmt.Sprint(a - b))
+				fs.Push(a - b)
 			case "*":
-				strs.Push(fmt.Sprint(a * b))
+				fs.Push(a * b)
 			case "/":
-				strs.Push(fmt.Sprint(a / b))
+				fs.Push(a / b)
 			default:
 				fmt.Println("错误的运算符")
 				os.Exit(1)
 			}
 		default:
-			strs.Push(v)
+			f, err := strconv.ParseFloat(v, 64)
+			if err != nil {
+				fmt.Printf("无法把%s转换成float64\n", v)
+				os.Exit(1)
+			}
+			fs.Push(f)
 		}
 	}
-	result, _ := strconv.ParseFloat(strs.Pop().(string), 64)
+	result := fs.Pop().(float64)
 	return result
 }
