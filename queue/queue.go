@@ -28,9 +28,9 @@ func New() Queue {
 
 type queue struct {
 	sync.RWMutex
-	first *node
-	last  *node
-	n     int
+	first *node //指向最早的node
+	last  *node //指向最新的node
+	n     int   //记录队列长度
 }
 
 func (q *queue) Enqueue(item interface{}) {
@@ -59,8 +59,8 @@ func (q *queue) Dequeue() interface{} {
 }
 
 func (q *queue) IsEmpty() bool {
-	q.Lock()
-	defer q.Unlock()
+	q.RLock()
+	defer q.RUnlock()
 	return q.first == nil
 }
 
