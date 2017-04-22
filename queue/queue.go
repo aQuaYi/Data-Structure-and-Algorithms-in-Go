@@ -30,7 +30,7 @@ type queue struct {
 	sync.RWMutex
 	first *node //指向最早的node
 	last  *node //指向最新的node
-	n     int   //记录队列长度
+	n     int   //记录长度
 }
 
 func (q *queue) Enqueue(item interface{}) {

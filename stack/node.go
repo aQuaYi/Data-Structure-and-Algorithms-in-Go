@@ -1,4 +1,4 @@
-package bag 
+package stack
 
 type node struct {
 	item interface{}

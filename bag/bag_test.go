@@ -1,93 +1,51 @@
 package bag
 
-import (
-	"sync"
-	"testing"
-)
+import "testing"
 
-func TestPropertyInitialValue(t *testing.T) {
-	prop := NewProperty(10)
-	if val := prop.Value(); val != 10 {
-		t.Fatalf("Expecting 10 but got %#v\n", val)
-	}
-	stream := prop.Observe()
-	for i := 0; i <= 100; i++ {
-		if val := stream.Value(); val != 10 {
-			t.Fatalf("Expecting 10 but got %#v\n", val)
-		}
+var B bag
+
+func Test_Bag_New(t *testing.T) {
+	b := New()
+	if !b.IsEmpty() {
+		t.Error("新生成的Bag不是空的")
 	}
 }
 
-func TestPropertyInitialObserve(t *testing.T) {
-	prop := NewProperty(10)
-	var prevStream Stream
-	for i := 0; i <= 100; i++ {
-		stream := prop.Observe()
-		if stream == prevStream {
-			t.Fatalf("Expecting different stream\n")
-		}
-		if val := stream.Value(); val != 10 {
-			t.Fatalf("Expecting 10 but got %#v\n", val)
-		}
-		prevStream = stream
+func Test_Bag_Add(t *testing.T) {
+	B.Add(0)
+	if B.n != 1 {
+		t.Error("Bag的数量没有在Add时增加。")
+	}
+	if B.last.item.(int) != 0 {
+		t.Error("Bag没能Add入正确的数据。")
 	}
 }
 
-func TestPropertyObserveAfterUpdate(t *testing.T) {
-	prop := NewProperty(10)
-	if val := prop.Value(); val != 10 {
-		t.Fatalf("Expecting 10 but got %#v\n", val)
-	}
-	prop.Update(15)
-	if val := prop.Value(); val != 15 {
-		t.Fatalf("Expecting 15 but got %#v\n", val)
-	}
-	stream := prop.Observe()
-	if val := stream.Value(); val != 15 {
-		t.Fatalf("Expecting 15 but got %#v\n", val)
-	}
-}
+func Test_Bag_Iterator(t *testing.T) {
+	N := 1000
 
-func TestPropertyMultipleConcurrentReaders(t *testing.T) {
-	initial := 1000
-	final := 2000
-	prop := NewProperty(initial)
-	var cherrs []chan error
-	for i := 0; i < 1000; i++ {
-		cherr := make(chan error, 1)
-		cherrs = append(cherrs, cherr)
-		go testStreamRead(prop.Observe(), initial, final, cherr)
+	for i := 1; i < N; i++ {
+		B.Add(i)
 	}
-	done := make(chan bool)
-	go func(prop Property, initial, final int, done chan bool) {
-		defer close(done)
-		for i := initial + 1; i <= final; i++ {
-			prop.Update(i)
-		}
-	}(prop, initial, final, done)
-	for _, cherr := range cherrs {
-		if err := <-cherr; err != nil {
-			t.Fatal(err)
-		}
-	}
-	<-done
-}
 
-func TestPropertyMultipleConcurrentReadersWriters(t *testing.T) {
-	wg := &sync.WaitGroup{}
-	writer := func(prop Property, times int) {
-		defer wg.Done()
-		for i := 0; i <= times; i++ {
-			val := prop.Value().(int)
-			prop.Update(val + 1)
-			prop.Observe()
+	if B.Size() != N {
+		t.Errorf("Bag没能完全地Add入%d个数字", N)
+	}
+
+	c := B.Iterator()
+	i := N - 1
+	for c.HasNext() {
+		item := c.Next().(int)
+		if item != i {
+			t.Error("Bag生成的迭代器不能按顺序迭代")
 		}
+		i--
 	}
-	prop := NewProperty(0)
-	times := 1000
-	for i := 0; i < 1000; i++ {
-		wg.Add(1)
-		go writer(prop, times)
+	if i != -1 {
+		t.Error("Bag生成的迭代器没有完成全部迭代。")
 	}
-	wg.Wait()
+
+	if B.Size() != N {
+		t.Error("迭代后，影响了Bag的长度。")
+	}
 }

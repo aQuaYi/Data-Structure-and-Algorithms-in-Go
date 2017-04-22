@@ -16,6 +16,9 @@ func Test_Queue_Enqueue(t *testing.T) {
 	if Q.first != Q.last {
 		t.Fatal("向空Queue中Enqueue第一个元素时，Q.first和Q.last没有指向同一个node。")
 	}
+	if Q.n != 1 {
+		t.Error("Queue的个数没有在Enqueue中增加。")
+	}
 }
 
 func Test_Queue_Dequeue(t *testing.T) {
@@ -27,8 +30,8 @@ func Test_Queue_Dequeue(t *testing.T) {
 		t.Error("queue没能正确地Dequeue出1")
 	}
 
-	if !Q.IsEmpty() {
-		t.Error("queue在dequeue最后一个node后，不是empty的")
+	if Q.n != 0 {
+		t.Error("queue在dequeue后，queue的数量没有减少一个。")
 	}
 }
 
