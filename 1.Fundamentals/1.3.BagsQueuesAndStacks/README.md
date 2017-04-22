@@ -1,7 +1,7 @@
 #目录
 
 ##笔记
-以链表的方式，实现了[背包](https://github.com/aQuaYi/Algorithms-in-Golang/bag)、[队列]()和[栈]()
+以链表的方式，实现了[背包](https://github.com/aQuaYi/Algorithms-in-Golang/tree/master/bag)、[队列](https://github.com/aQuaYi/Algorithms-in-Golang/tree/master/queue)和[栈](https://github.com/aQuaYi/Algorithms-in-Golang/tree/master/stack)。虽然实现了这三个包，但是，我不觉得自己的代码是go style的。
 ##练习解答
 * [1.3.1](./1.3.1/main.go)
 * [1.3.2](./1.3.2/main.go)
