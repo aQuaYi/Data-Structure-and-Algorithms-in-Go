@@ -11,7 +11,7 @@ import (
 func main() {
 	fmt.Println("程序开始")
 
-	s := "( ( 1 2 + ) ( ( 3 4 * ) ( 5 7 / ) * ) * )"
+	s := "( ( 1 2 + ) ( ( 7 4 - ) ( 5 7 / ) * ) * )"
 	fmt.Println(s)
 	r := evaluatePostfix(s)
 	fmt.Println(r)
