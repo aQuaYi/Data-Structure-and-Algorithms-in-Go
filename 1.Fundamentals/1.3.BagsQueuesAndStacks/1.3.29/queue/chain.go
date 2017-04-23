@@ -17,18 +17,38 @@ type Iterator interface {
 }
 
 type chain struct {
-	node *node
+	next       *node
+	first      *node
+	firstAgain bool
+}
+
+func newChain(node *node) *chain {
+	if node == nil {
+		return nil
+	}
+	return &chain{
+		next:  node.next,
+		first: node.next,
+	}
 }
 
 func (c *chain) Next() interface{} {
-	item := c.node.item
-	c.node = c.node.next
+	item := c.next.item
+	c.next = c.next.next
 	return item
 }
 
 func (c *chain) HasNext() bool {
-	if c.node != nil {
-		return true
+	if c == nil { //空的链直接返回false
+		return false
 	}
-	return false
+	if c.next == c.first {
+		if !c.firstAgain {
+			c.firstAgain = true
+			return true
+		}
+		return false
+	}
+
+	return true
 }

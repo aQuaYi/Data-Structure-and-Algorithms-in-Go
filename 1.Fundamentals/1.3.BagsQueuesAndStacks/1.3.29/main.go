@@ -3,9 +3,20 @@ package main
 
 import (
 	"fmt"
+
+	"./queue"
 )
 
 func main() {
 	fmt.Println("程序开始")
-
+	q := queue.New()
+	n := 12
+	fmt.Printf("将会输出[0,%d]中的所有整数\n", n-1)
+	for i := 0; i < n; i++ {
+		q.Enqueue(i)
+	}
+	c := q.Iterator()
+	for c.HasNext() {
+		fmt.Printf("%v ", c.Next())
+	}
 }

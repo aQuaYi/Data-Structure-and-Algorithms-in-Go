@@ -49,21 +49,29 @@ func (q *queue) Enqueue(item interface{}) {
 }
 
 func (q *queue) Dequeue() interface{} {
+	if q.IsEmpty() {
+		return nil
+	}
+
 	q.Lock()
 	defer q.Unlock()
-	item := q.first.item
-	q.first = q.first.next
-	if q.first == nil { //如果连first都为nil，说明队列空了。
-		q.last = nil //需要把last设置为nil
-	}
 	q.n--
+
+	item := q.last.next.item
+
+	if q.n == 0 {
+		q.last = nil
+	} else {
+		q.last.next = q.last.next.next
+	}
+
 	return item
 }
 
 func (q *queue) IsEmpty() bool {
 	q.RLock()
 	defer q.RUnlock()
-	return q.first == nil
+	return q.last == nil
 }
 
 func (q *queue) Size() int {
@@ -75,5 +83,5 @@ func (q *queue) Size() int {
 func (q *queue) Iterator() Iterator {
 	q.RLock()
 	defer q.RUnlock()
-	return &chain{node: q.first}
+	return newChain(q.last)
 }
