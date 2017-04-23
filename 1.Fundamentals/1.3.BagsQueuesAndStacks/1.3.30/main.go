@@ -35,30 +35,41 @@ func main() {
 	}
 	fmt.Println()
 }
+func reverse(x *node) *node {
+	first := x
+	var reverse *node
 
-func reverse(first *node) *node {
-	if first == nil {
-		return nil
-	}
-	if first.next == nil {
-		return first
-	}
-
-	f, fn, fnn := first, first.next, first.next.next
-	first.next = nil
-	for fnn.next != nil {
-		fn.next = f
-		// f, fn, fnn =	 fn, fnn, fnn.next
-		f = fn
-		fn = fnn
-		fnn = fnn.next
+	for first != nil {
+		second := first.next
+		first.next = reverse
+		reverse = first
+		first = second
 	}
 
-	fn.next = f
-	fnn.next = fn
-
-	return fnn
+	return reverse
 }
+
+// func reverse(first *node) *node {
+// 	if first == nil {
+// 		return nil
+// 	}
+// 	if first.next == nil {
+// 		return first
+// 	}
+
+// 	f, fn, fnn := first, first.next, first.next.next
+// 	first.next = nil
+// 	for fnn.next != nil {
+// 		fn.next = f
+// 		f, fn, fnn = fn, fnn, fnn.next
+
+// 	}
+
+// 	fn.next = f
+// 	fnn.next = fn
+
+// 	return fnn
+// }
 
 type node struct {
 	item interface{}

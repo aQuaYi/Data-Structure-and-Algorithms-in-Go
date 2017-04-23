@@ -1,4 +1,4 @@
-package main
+package doubleNode
 
 import (
 	"fmt"
@@ -7,7 +7,4 @@ import (
 func main() {
 	fmt.Println("程序开始")
 
-
-
 }
-	

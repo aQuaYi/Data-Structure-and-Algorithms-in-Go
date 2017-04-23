@@ -38,26 +38,20 @@ func main() {
 
 func reverse(first *node) *node {
 	if first == nil {
-		return nil
+		return nil //仅当first为nil时，会执行这一条语句。
 	}
 	if first.next == nil {
+		//当first不为nil时，这是最简单的情况。
+		//这里返回的first已经是链条的末尾了。
 		return first
 	}
 
-	f, fn, fnn := first, first.next, first.next.next
+	second := first.next
+	rest := reverse(second)
+	second.next = first
 	first.next = nil
-	for fnn.next != nil {
-		fn.next = f
-		// f, fn, fnn =	 fn, fnn, fnn.next
-		f = fn
-		fn = fnn
-		fnn = fnn.next
-	}
+	return rest
 
-	fn.next = f
-	fnn.next = fn
-
-	return fnn
 }
 
 type node struct {
