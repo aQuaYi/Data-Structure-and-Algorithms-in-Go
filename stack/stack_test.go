@@ -33,6 +33,9 @@ func Test_Stack_Pop(t *testing.T) {
 	if S.n != 0 {
 		t.Error("Stack在Pop后没能，个数没能减少一个。")
 	}
+	if S.Pop() != nil {
+		t.Error("空栈Pop出来的，不是nil")
+	}
 }
 
 func Test_Stack_Iterator(t *testing.T) {

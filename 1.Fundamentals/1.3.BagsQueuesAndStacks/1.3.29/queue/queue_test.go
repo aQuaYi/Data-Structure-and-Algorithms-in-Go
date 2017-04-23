@@ -33,10 +33,6 @@ func Test_Queue_Dequeue(t *testing.T) {
 	if Q.n != 0 {
 		t.Error("queue在dequeue后，queue的数量没有减少一个。")
 	}
-
-	if Q.Dequeue() != nil {
-		t.Error("空队列Dequeue出来的不是nil")
-	}
 }
 
 func Test_Queue_Iterator(t *testing.T) {

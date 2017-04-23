@@ -28,28 +28,27 @@ func New() Queue {
 
 type queue struct {
 	sync.RWMutex
-	first *node //指向最早的node
-	last  *node //指向最新的node
-	n     int   //记录长度
+	last *node //指向最新的node
+	n    int   //记录长度
 }
 
 func (q *queue) Enqueue(item interface{}) {
 	q.Lock()
 	defer q.Unlock()
-	oldLast := q.last
-	q.last = newNode(item)
+
+	newLast := newNode(item)
 	if q.n == 0 { //当空队列enqueue入第一个node的时候。
-		q.first = q.last //first和last都指向同一个node
+		q.last = newLast
+		q.last.next = newLast
 	} else {
-		oldLast.next = q.last
+		newLast.next = q.last.next
+		q.last.next = newLast
+		q.last = newLast
 	}
 	q.n++
 }
 
 func (q *queue) Dequeue() interface{} {
-	if q.IsEmpty() {
-		return nil
-	}
 	q.Lock()
 	defer q.Unlock()
 	item := q.first.item

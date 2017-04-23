@@ -42,6 +42,9 @@ func (s *stack) Push(item interface{}) {
 }
 
 func (s *stack) Pop() interface{} {
+	if s.IsEmpty() {
+		return nil
+	}
 	s.Lock()
 	defer s.Unlock()
 	item := s.last.item
