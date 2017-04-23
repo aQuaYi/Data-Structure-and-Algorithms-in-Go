@@ -1,4 +1,4 @@
-package queue
+package circleQueue
 
 type node struct {
 	item interface{}

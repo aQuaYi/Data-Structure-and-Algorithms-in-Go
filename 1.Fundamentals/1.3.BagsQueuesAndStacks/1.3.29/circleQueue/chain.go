@@ -1,4 +1,4 @@
-package queue
+package circleQueue
 
 //Iterator 是为了实现queue的迭代功能而实现的接口。
 /*可以按照如下的方法，访问Iterator中的每一个元素。
