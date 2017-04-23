@@ -54,9 +54,9 @@ func main() {
 			os.Exit(1)
 		}
 	}
-	md := "#目录\n\n##练习解答\n"
+	md := "# 目录\n\n## 笔记\n\n## 练习解答\n"
 	for _, v := range dirs {
-		md += fmt.Sprintf("* [%s](./%s/main.go)\n", v, v)
+		md += fmt.Sprintf("* [ ] [%s](./%s/main.go)\n", v, v)
 	}
 	fname := fmt.Sprintf("%s/README.md", topDir)
 	err = ioutil.WriteFile(fname, []byte(md), 0755)
