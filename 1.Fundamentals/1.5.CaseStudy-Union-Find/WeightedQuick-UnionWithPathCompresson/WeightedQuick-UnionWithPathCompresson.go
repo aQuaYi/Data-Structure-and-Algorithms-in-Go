@@ -55,7 +55,11 @@ func (u *uf) Find(p int) int {
 	for p != u.id[p] { //直到P为根节点时，停止
 		p = u.id[p]
 	}
-	u.id[oldP] = p // 压缩路径
+	for u.id[oldP] != p { //压缩路径上的每一个P点
+		pNext := u.id[oldP]
+		u.id[oldP] = p
+		oldP = pNext
+	}
 	return p
 }
 
