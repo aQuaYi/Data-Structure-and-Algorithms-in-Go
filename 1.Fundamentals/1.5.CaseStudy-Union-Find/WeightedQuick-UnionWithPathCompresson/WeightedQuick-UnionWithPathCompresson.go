@@ -46,7 +46,7 @@ func (u *uf) Find(p int) int {
 
 	pRoot := u.id[p]
 	if u.id[pRoot] == pRoot {
-		//成立则说明，pRoot确实为根节点
+		//成立则说明，pRoot为根节点
 		//p为根节点或者根节点的子节点，不需要压缩
 		return pRoot
 	}
@@ -69,7 +69,7 @@ func (u *uf) Union(p, q int) {
 		return
 	}
 
-	if u.sz[i] < u.sz[j] {
+	if u.sz[i] < u.sz[j] { //将小树的根节点指向大树的根节点
 		u.id[i] = j
 		u.sz[j] += u.sz[i]
 	} else {
