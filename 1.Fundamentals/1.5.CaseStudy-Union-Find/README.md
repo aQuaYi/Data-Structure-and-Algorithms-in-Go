@@ -1,6 +1,7 @@
 # 目录
 
 ## 笔记
+实现了[路径压缩的加权快速联通](./WeightedQuick-UnionWithPathCompresson)算法。
 
 ## 练习解答
 * [ ] [1.5.1](./1.5.1/main.go)
