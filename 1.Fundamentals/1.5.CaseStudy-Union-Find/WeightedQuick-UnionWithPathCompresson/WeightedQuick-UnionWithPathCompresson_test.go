@@ -57,10 +57,17 @@ func Test_UnionFind_Find(t *testing.T) {
 			t.Errorf("u.Find(%d)!=%d\n", i, n-1)
 		}
 	}
-
+	t.Log("重新生成一个树")
+	u = New(n).(*uf)
+	for i := 0; i < n-1; i++ {
+		u.id[i] = i + 1
+	}
+	if u.Find(0) != n-1 {
+		t.Error("无法Find正确的根节点")
+	}
 	for i := 0; i < n; i++ {
 		if u.id[i] != n-1 {
-			t.Error("Find的过程中，没能压缩路径\n")
+			t.Error("没能压缩沿路所有路径\n")
 		}
 	}
 }
