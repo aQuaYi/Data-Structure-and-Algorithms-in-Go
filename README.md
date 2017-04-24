@@ -8,6 +8,8 @@
     - [1.3.背包、队列和栈](./1.Fundamentals/1.3.BagsQueuesAndStacks)
     - [1.4.算法分析](./1.Fundamentals/1.4.AnalysisOfAlgorithms)
     - [1.5.案例研究：union-find算法](./1.Fundamentals/1.5.CaseStudy-Union-Find)
+- [2.排序](./2.Sorting)
+    - [2.1.初级排序算法](./2.Sorting/2.1.ElementarySorts)
 
 ## 参考资料
 1. [算法（第4版）](https://book.douban.com/subject/19952400)
