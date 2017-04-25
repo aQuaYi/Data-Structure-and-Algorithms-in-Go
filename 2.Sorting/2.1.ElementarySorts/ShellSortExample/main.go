@@ -12,6 +12,7 @@ func main() {
 	ss := strings.Split(str, "")
 	n := len(ss)
 	h := 1
+	count := 0
 	for h < n/3 {
 		h = 3*h + 1
 	}
@@ -25,8 +26,9 @@ func main() {
 				if ss[j] < ss[j-h] {
 					ss[j], ss[j-h] = ss[j-h], ss[j]
 					printS(ss, j, j-h, "[", "]") //两个已经交换位置的元素
+					fmt.Println()
 				}
-
+				count++
 			}
 		}
 		h = h / 3
@@ -34,6 +36,7 @@ func main() {
 	fmt.Println("--------------------------------------------")
 
 	printS(ss, -1, -1, "", "")
+	fmt.Println("总比较次数", count)
 }
 
 func printS(ss []string, a, b int, sl, sr string) {
