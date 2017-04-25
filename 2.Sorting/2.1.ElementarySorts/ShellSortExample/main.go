@@ -27,8 +27,10 @@ func main() {
 					ss[j], ss[j-h] = ss[j-h], ss[j]
 					printS(ss, j, j-h, "[", "]") //两个已经交换位置的元素
 					fmt.Println()
+					continue
 				}
 				count++
+				break
 			}
 		}
 		h = h / 3

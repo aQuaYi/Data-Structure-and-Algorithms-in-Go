@@ -7,10 +7,8 @@
 插入排序的关键步骤是
 ```go
 for i:=1;i<n;i++{
-    for j:=i;j>0;j--{
-        if a[j-1]>a[j]{
+    for j:=i; j>0 && a[j-1]>a[j]; j--{
             a[j-1],a[j]=a[j],a[j-1]
-        }
     }
 }
 ```
@@ -30,11 +28,8 @@ for h < n/hFactor { //获取h的值
 
 for h >= 1 { //以下是排序循环
 	for i := h; i < n; i++ {
-		for j := i; j >= h; j -= h {
-			if a[j-h] > a[j] {
-				a[j-h], a[j] = a[j], a[j-h]
-			}
-			count++
+		for j := i; j >= h && a[j-h] > a[j]; j -= h {
+			a[j-h], a[j] = a[j], a[j-h]
 		}
 	}
 	h = h / hFactor
