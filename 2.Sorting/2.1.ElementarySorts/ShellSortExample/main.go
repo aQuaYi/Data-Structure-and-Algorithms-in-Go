@@ -19,7 +19,7 @@ func main() {
 	printS(ss, -1, -1, "", "")
 	fmt.Println("--------------------------------------------")
 	for h >= 1 {
-		fmt.Println("h=", h)
+		fmt.Println("h=", h, "------------------------")
 		for i := h; i < n; i++ {
 			for j := i; j >= h; j -= h {
 				printS(ss, j, j-h, "_", "_") //两个相互比较
