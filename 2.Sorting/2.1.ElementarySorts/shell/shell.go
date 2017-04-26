@@ -1,14 +1,11 @@
 package shell
 
-//Shell 是shell sort 的接口，也是普通的排序接口
-type Shell interface {
-	Len() int
-	Less(int, int) bool
-	Swap(int, int)
-}
+import (
+	"sort"
+)
 
 //Sort 对a进行希尔排序
-func Sort(a Shell) {
+func Sort(a sort.Interface) {
 	n := a.Len()
 	h := 1
 	factor := 3
