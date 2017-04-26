@@ -29,3 +29,28 @@ func Sort(a []int) []int {
 	mid := len(a) / 2
 	return merge(Sort(a[:mid]), Sort(a[mid:]))
 }
+
+//BUSort 返回自底向上的排序好的int切片
+func BUSort(a []int) []int {
+	if len(a) < 2 {
+		return a
+	}
+	n := len(a)
+	var result []int
+	for sz := 1; sz < n*2; sz *= 2 {
+		result = make([]int, 0, n)
+		for i := 0; i < n; i += sz {
+			mid := (i + i + sz) / 2
+			result = append(result, merge(a[i:min(mid, n)], a[min(mid, n):min(i+sz, n)])...)
+		}
+		a = result
+	}
+	return result
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}

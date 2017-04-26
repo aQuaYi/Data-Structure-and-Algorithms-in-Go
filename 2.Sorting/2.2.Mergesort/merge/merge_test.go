@@ -34,3 +34,27 @@ func Test_Sort_100000(t *testing.T) {
 		t.Error("没能排序好")
 	}
 }
+
+func Test_BUSort(t *testing.T) {
+	s := make([]int, 10)
+	for i := 0; i < len(s); i++ {
+		s[i] = len(s) - i - 1
+	}
+	t.Log(s)
+	s = BUSort(s)
+	t.Log(s)
+	if !isSorted(s) {
+		t.Error("没能排序好")
+	}
+}
+
+func Test_BUSort_100000(t *testing.T) {
+	s := make([]int, 100000)
+	for i := 0; i < len(s); i++ {
+		s[i] = len(s) - i - 1
+	}
+	s = BUSort(s)
+	if !isSorted(s) {
+		t.Error("没能排序好")
+	}
+}
