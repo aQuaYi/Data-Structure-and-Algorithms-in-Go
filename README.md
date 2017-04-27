@@ -11,6 +11,7 @@
 - [2.排序](./2.Sorting)
     - [2.1.初级排序算法](./2.Sorting/2.1.ElementarySorts)
     - [2.2.归并排序](./2.Sorting/2.2.Mergesort)
+    - [2.3.快速排序](./2.Sorting/2.3.QuickSort)
 
 ## 参考资料
 1. [算法（第4版）](https://book.douban.com/subject/19952400)
