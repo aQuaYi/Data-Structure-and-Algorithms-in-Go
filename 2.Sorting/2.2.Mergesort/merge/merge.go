@@ -1,6 +1,58 @@
 package merge
 
-func merge(left, right []int) []int {
+//通过bench测试，以下merge方式最快
+var merge = mergeAssignmentReslice
+
+//对通过赋值的方式把子切片的值传递给result
+//然后对子切片reslice
+func mergeAssignmentReslice(left, right []int) []int {
+	cap := len(left) + len(right)
+	result := make([]int, cap, cap)
+	for k := 0; k < cap; k++ {
+		switch {
+		case len(left) == 0:
+			result = append(result[:k], right...)
+			return result
+		case len(right) == 0:
+			result = append(result[:k], left...)
+			return result
+		case left[0] < right[0]:
+			result[k] = left[0]
+			left = left[1:]
+		default:
+			result[k] = right[0]
+			right = right[1:]
+		}
+	}
+	panic("Never Reach Here")
+}
+
+//通过赋值的方式把子切片的值传递给result
+func mergeAssignment(left, right []int) []int {
+	cap, i, j := len(left)+len(right), 0, 0
+	result := make([]int, cap, cap)
+	for k := 0; k < cap; k++ {
+		switch {
+		case i >= len(left):
+			result[k] = right[j]
+			j++
+		case j >= len(right):
+			result[k] = left[i]
+			i++
+		case left[i] < right[j]:
+			result[k] = left[i]
+			i++
+		default:
+			result[k] = right[j]
+			j++
+		}
+	}
+	return result
+}
+
+//通过append的方式把子切片的值传递给result
+//传值后，对子切片reslice
+func mergeReslice(left, right []int) []int {
 	cap := len(left) + len(right)
 	result := make([]int, 0, cap)
 	for {
