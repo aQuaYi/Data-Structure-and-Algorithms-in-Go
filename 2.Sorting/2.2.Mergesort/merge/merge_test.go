@@ -24,8 +24,8 @@ func Test_Sort(t *testing.T) {
 	}
 }
 
-func Test_Sort_100000(t *testing.T) {
-	s := make([]int, 100000)
+func Test_Sort_1000000(t *testing.T) {
+	s := make([]int, 1000000)
 	for i := 0; i < len(s); i++ {
 		s[i] = len(s) - i - 1
 	}
@@ -48,8 +48,8 @@ func Test_BUSort(t *testing.T) {
 	}
 }
 
-func Test_BUSort_100000(t *testing.T) {
-	s := make([]int, 100000)
+func Test_BUSort_1000000(t *testing.T) {
+	s := make([]int, 1000000)
 	for i := 0; i < len(s); i++ {
 		s[i] = len(s) - i - 1
 	}

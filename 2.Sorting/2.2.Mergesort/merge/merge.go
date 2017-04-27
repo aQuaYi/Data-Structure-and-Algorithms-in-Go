@@ -1,7 +1,8 @@
 package merge
 
 func merge(left, right []int) []int {
-	var result []int
+	cap := len(left) + len(right)
+	result := make([]int, 0, cap)
 	for {
 		switch {
 		case len(left) == 0:
@@ -36,15 +37,18 @@ func BUSort(a []int) []int {
 		return a
 	}
 	n := len(a)
+
 	var result []int
-	for sz := 1; sz < n*2; sz *= 2 {
+	for sz := 1; sz < n; sz *= 2 {
 		result = make([]int, 0, n)
-		for i := 0; i < n; i += sz {
-			mid := (i + i + sz) / 2
-			result = append(result, merge(a[i:min(mid, n)], a[min(mid, n):min(i+sz, n)])...)
+		for i := 0; i < n; i += sz + sz {
+			mid := min(i+sz, n)
+			hi := min(mid+sz, n)
+			result = append(result, merge(a[i:mid], a[mid:hi])...)
 		}
 		a = result
 	}
+
 	return result
 }
 
