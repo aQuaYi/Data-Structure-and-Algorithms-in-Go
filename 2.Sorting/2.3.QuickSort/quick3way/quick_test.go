@@ -17,10 +17,6 @@ func (q quick) Less(i, j int) bool {
 	return q[i] < q[j]
 }
 
-func (q quick) More(i, j int) bool {
-	return q[i] > q[j]
-}
-
 func (q quick) Swap(i, j int) {
 	q[i], q[j] = q[j], q[i]
 }
