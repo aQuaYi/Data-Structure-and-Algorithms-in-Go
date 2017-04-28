@@ -29,7 +29,7 @@ func partition(a sort.Interface) int {
 	i, j := 1, a.Len()-1
 	for {
 		for a.Less(i, 0) && i < a.Len()-1 {
-			// i<a.Len()-1 保证了当i不会>a.Len()
+			// i<a.Len()-1 保证了当i不会为a.Len()
 			// 例如，当a[0]为最大值时，i会一直变大。直到i++后，i==a.Len()
 			// 那么在下一个a.Less(i,0)时，会产生"index out of range"错误。
 			// 当a.Len()==2时，这种情况很容易发生。
