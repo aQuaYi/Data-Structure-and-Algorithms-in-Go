@@ -31,7 +31,7 @@ func (q quick) Divide(i, j int) Interface {
 
 func (q quick) IsSorted() bool {
 	for i := 1; i < q.Len(); i++ {
-		if q.More(i-1, i) {
+		if q.Less(i, i-1) {
 			return false
 		}
 	}

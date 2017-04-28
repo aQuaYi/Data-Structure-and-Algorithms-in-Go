@@ -6,7 +6,6 @@ import "sort"
 //Interface 是quick排序的接口
 type Interface interface {
 	sort.Interface
-	More(int, int) bool
 	Divide(int, int) Interface
 }
 
@@ -30,7 +29,7 @@ func partition(a Interface) (int, int) {
 			a.Swap(lt, i)
 			lt++
 			i++
-		case a.More(i, lt):
+		case a.Less(lt, i):
 			a.Swap(i, gt)
 			gt--
 		default:
