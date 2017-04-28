@@ -47,6 +47,7 @@ func partition(a sort.Interface) int {
 		}
 		a.Swap(i, j)
 	}
+
 	a.Swap(0, j)
 
 	return j
