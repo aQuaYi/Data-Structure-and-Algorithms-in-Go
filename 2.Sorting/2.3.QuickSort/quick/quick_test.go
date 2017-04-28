@@ -33,6 +33,7 @@ func (q quick) IsSorted() bool {
 	}
 	return true
 }
+
 func Test_Sort_with_Repeating(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 	n := 10
@@ -48,6 +49,7 @@ func Test_Sort_with_Repeating(t *testing.T) {
 		t.Error("没能排序好")
 	}
 }
+
 func Test_Sort(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 	q := make(quick, 10)
@@ -84,6 +86,7 @@ func Test_Sort_1000(t *testing.T) {
 	}
 
 }
+
 func Test_Sort_10000(t *testing.T) {
 	q := make(quick, 10000)
 	for i := 0; i < q.Len(); i++ {
@@ -116,6 +119,7 @@ func Test_Sort_1000000(t *testing.T) {
 		t.Error("没能排序好")
 	}
 }
+
 func Test_Sort_10000000(t *testing.T) {
 	q := make(quick, 10000000)
 	for i := 0; i < q.Len(); i++ {
@@ -126,6 +130,7 @@ func Test_Sort_10000000(t *testing.T) {
 		t.Error("没能排序好")
 	}
 }
+
 func Test_Sort_100000000(t *testing.T) {
 	q := make(quick, 100000000)
 	for i := 0; i < q.Len(); i++ {
