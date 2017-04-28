@@ -1,7 +1,6 @@
 package quick
 
 import (
-	"fmt"
 	"math/rand"
 	"sort"
 )
@@ -25,26 +24,30 @@ func Sort(a Interface) {
 	Sort(a.Divide(j+1, a.Len()))
 }
 
+//partition 要考虑好，当a.Len()==2时，如何排好序
 func partition(a sort.Interface) int {
 	i, j := 1, a.Len()-1
-	fmt.Println(a)
 	for {
-		for a.Less(i, 0) && i < a.Len() {
+		for a.Less(i, 0) && i < a.Len()-1 {
+			// i<a.Len()-1 保证了当i不会>a.Len()
+			// 例如，当a[0]为最大值时，i会一直变大。直到i++后，i==a.Len()
+			// 那么在下一个a.Less(i,0)时，会产生"index out of range"错误。
+			// 当a.Len()==2时，这种情况很容易发生。
 			i++
 		}
 		for a.Less(0, j) && j > 0 {
+			// j>0, 保证了j不会为-1
+			// 例如，当a[0]为最小值时，j会一直变小。直到j--后，j==-1
+			// 那么在下一个a.Less(0,j)时，会产生"index out of range"错误。
+			// 当a.Len()==2时，这种情况很容易发生。
 			j--
 		}
 		if i >= j {
 			break
 		}
 		a.Swap(i, j)
-		fmt.Printf("Swap(%d,%d)\n", i, j)
-		fmt.Println(a)
 	}
 	a.Swap(0, j)
-	fmt.Printf("Swap(0,%d)\n", j)
-	fmt.Println(a)
 
 	return j
 }

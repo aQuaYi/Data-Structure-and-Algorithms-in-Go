@@ -47,7 +47,50 @@ func Test_Sort(t *testing.T) {
 	}
 }
 
-/*
+func Test_Sort_100(t *testing.T) {
+	q := make(quick, 100)
+	for i := 0; i < q.Len(); i++ {
+		q[i] = q.Len() - i - 1
+	}
+	Sort(q)
+	if !q.IsSorted() {
+		t.Error("没能排序好")
+	}
+}
+
+func Test_Sort_1000(t *testing.T) {
+	q := make(quick, 1000)
+	for i := 0; i < q.Len(); i++ {
+		q[i] = q.Len() - i - 1
+	}
+	Sort(q)
+	if !q.IsSorted() {
+		t.Error("没能排序好")
+	}
+
+}
+func Test_Sort_10000(t *testing.T) {
+	q := make(quick, 10000)
+	for i := 0; i < q.Len(); i++ {
+		q[i] = q.Len() - i - 1
+	}
+	Sort(q)
+	if !q.IsSorted() {
+		t.Error("没能排序好")
+	}
+}
+
+func Test_Sort_100000(t *testing.T) {
+	q := make(quick, 100000)
+	for i := 0; i < q.Len(); i++ {
+		q[i] = q.Len() - i - 1
+	}
+	Sort(q)
+	if !q.IsSorted() {
+		t.Error("没能排序好")
+	}
+}
+
 func Test_Sort_1000000(t *testing.T) {
 	q := make(quick, 1000000)
 	for i := 0; i < q.Len(); i++ {
@@ -58,4 +101,23 @@ func Test_Sort_1000000(t *testing.T) {
 		t.Error("没能排序好")
 	}
 }
-*/
+func Test_Sort_10000000(t *testing.T) {
+	q := make(quick, 10000000)
+	for i := 0; i < q.Len(); i++ {
+		q[i] = q.Len() - i - 1
+	}
+	Sort(q)
+	if !q.IsSorted() {
+		t.Error("没能排序好")
+	}
+}
+func Test_Sort_100000000(t *testing.T) {
+	q := make(quick, 100000000)
+	for i := 0; i < q.Len(); i++ {
+		q[i] = q.Len() - i - 1
+	}
+	Sort(q)
+	if !q.IsSorted() {
+		t.Error("没能排序好")
+	}
+}
