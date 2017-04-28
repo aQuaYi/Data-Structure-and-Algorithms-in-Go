@@ -53,7 +53,20 @@ func Test_Sort(t *testing.T) {
 		t.Error("没能排序好")
 	}
 }
-
+func Test_Sort_without_Repeating(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	n := 20
+	q := make(quick, n)
+	for i := 0; i < n; i++ {
+		q[i] = n - i - 1
+	}
+	fmt.Println(q)
+	Sort(q)
+	fmt.Println(q)
+	if !q.IsSorted() {
+		t.Error("没能排序好")
+	}
+}
 func Test_Sort_100(t *testing.T) {
 	n := 100
 	q := make(quick, n*3)
