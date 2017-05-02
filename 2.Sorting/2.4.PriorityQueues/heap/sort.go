@@ -17,7 +17,7 @@ func Sort(a Interface) {
 	heapSort(a)
 }
 
-//reheapify 采取top-down方式的堆有序化
+//reheapify 堆有序化
 //reheapify后，根节点是序列中的最大值。
 func reheapify(a Interface) {
 	n := a.Len()
