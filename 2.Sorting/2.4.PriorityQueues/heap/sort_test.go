@@ -21,6 +21,10 @@ func (h heap) Swap(i, j int) {
 	h[i], h[j] = h[j], h[i]
 }
 
+func (h heap) Divide(i, j int) Interface {
+	return h[i:j]
+}
+
 func (h heap) IsSorted() bool {
 	for i := 1; i < h.Len(); i++ {
 		if h.Less(i, i-1) {
@@ -32,7 +36,7 @@ func (h heap) IsSorted() bool {
 
 func Test_Sort(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
-	h := make(heap, 10)
+	h := make(heap, 11)
 	for i := 0; i < len(h); i++ {
 		h[i] = len(h) - i - 1
 	}
@@ -43,7 +47,21 @@ func Test_Sort(t *testing.T) {
 		t.Error("没能排序好")
 	}
 }
-/*
+
+func Test_Sort_Sorted(t *testing.T) {
+	rand.Seed(time.Now().UnixNano())
+	h := make(heap, 11)
+	for i := 0; i < len(h); i++ {
+		h[i] = i
+	}
+	fmt.Println(h)
+	Sort(h)
+	fmt.Println(h)
+	if !h.IsSorted() {
+		t.Error("没能排序好")
+	}
+}
+
 func Test_Sort_with_Repeating(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 	n := 10
@@ -137,4 +155,3 @@ func Test_Sort_100000000(t *testing.T) {
 		t.Error("没能排序好")
 	}
 }
-*/
