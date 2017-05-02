@@ -31,11 +31,11 @@ func reheapify(a Interface) {
 //sink 让较小的元素下沉
 func sink(a Interface, i int) {
 	n := a.Len()
-	for 2*i+1 < n {
+	for 2*i+1 < n { //当i节点存在son节点的时候，继续循环
 		iSon := 2*i + 1
 		if iSon+1 < n && a.Less(iSon, iSon+1) {
-			//iSon+1<n 是为了确保a[iSon+1]不越界
-			//a.Less(iSon, iSon+1)是为了与较大的Son互换。
+			//iSon+1<n 保证了a[iSon+1]不越界
+			//a.Less(iSon, iSon+1)是为了i与较大的Son互换。
 			iSon++
 		}
 		if a.Less(iSon, i) {
@@ -50,9 +50,9 @@ func heapSort(a Interface) {
 	n := a.Len()
 	for n > 1 {
 		n--
-		a.Swap(0, n)
-		a = a.Divide(0, n)
-		sink(a, 0)
+		a.Swap(0, n)       //把序列a中的最大值，放在序列尾部
+		a = a.Divide(0, n) //把已经已经归为的a的最大值与其余部分隔离开
+		sink(a, 0)         //让a重新堆有序化
 	}
 }
 
