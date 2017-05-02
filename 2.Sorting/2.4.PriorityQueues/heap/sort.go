@@ -9,9 +9,6 @@ type Interface interface {
 }
 
 //Sort 使用堆排序
-//a[i]的son节点是a[2*i+1]和a[2*i+2]
-//a[i]的father节点是a[(i-1)/2]
-//root节点是a[0]
 func Sort(a Interface) {
 	reheapify(a)
 	heapSort(a)
@@ -19,6 +16,9 @@ func Sort(a Interface) {
 
 //reheapify 堆有序化
 //reheapify后，根节点是序列中的最大值。
+//a[i]的son节点是a[2*i+1]和a[2*i+2]
+//a[i]的father节点是a[(i-1)/2]
+//root节点是a[0]
 func reheapify(a Interface) {
 	n := a.Len()
 	for i := n/2 - 1; i >= 0; i-- {
@@ -29,7 +29,7 @@ func reheapify(a Interface) {
 }
 
 //maxTop前，如果以i节点的两个子节点为root节点的两个子完全二叉树是堆有序的。
-//maxTop后，以i节点为root节点的子完全二叉树，是堆有序的。而且，i节点是这个子完全二叉树中的最大值。
+//maxTop后，以i节点为root节点的子完全二叉树，堆有序。而且，i节点是这个子完全二叉树中的最大值。
 func maxTop(a Interface, i int) {
 	n := a.Len()
 	for 2*i+1 < n { //当i节点存在son节点的时候，继续循环
