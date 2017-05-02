@@ -55,14 +55,3 @@ func heapSort(a Interface) {
 		sink(a, 0)         //让a重新堆有序化
 	}
 }
-
-func swin(a Interface, i int) {
-	for i > 0 {
-		iFather := (i - 1) / 2
-		if !a.Less(iFather, i) {
-			return
-		}
-		a.Swap(iFather, i)
-		i = iFather
-	}
-}
