@@ -12,6 +12,11 @@
     - [2.1.初级排序算法](./2.Sorting/2.1.ElementarySorts)
     - [2.2.归并排序](./2.Sorting/2.2.Mergesort)
     - [2.3.快速排序](./2.Sorting/2.3.QuickSort)
+    - [2.4.优先队列](./2.Sorting/2.4.PriorityQueues)
+    - [2.5.应用](./2.Sorting/2.5.Applications)
+- [3.搜索](./3.Searching)
+    - [3.1.符号表](./3.Searching/3.1.SymbolTables)
+
 
 ## 参考资料
 1. [算法（第4版）](https://book.douban.com/subject/19952400)
