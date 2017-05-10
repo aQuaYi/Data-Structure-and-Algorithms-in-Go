@@ -16,6 +16,7 @@
     - [2.5.应用](./2.Sorting/2.5.Applications)
 - [3.搜索](./3.Searching)
     - [3.1.符号表](./3.Searching/3.1.SymbolTables)
+    - [3.2.二叉查找树](./3.Searching/3.2.BinarySearchTrees)
 
 
 ## 参考资料
