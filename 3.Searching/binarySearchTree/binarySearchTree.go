@@ -2,6 +2,18 @@ package binarySearchTree
 
 //Node 是binary search tree所有方法的集合
 type Node interface {
+	Size() int
+	Put(Comparer, interface{})
+	Get(Comparer) interface{}
+	Delete(Comparer)
+	DeleteMax()
+	DeleteMin()
+	Rank(Comparer) int
+	Select(int) interface{}
+	Floor(Comparer) interface{}
+	Ceiling(Comparer) interface{}
+	MaxKey() interface{}
+	MinKey() interface{}
 }
 
 //Comparer 规定了元素的可比较性
