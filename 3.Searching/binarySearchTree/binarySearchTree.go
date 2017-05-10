@@ -1,5 +1,9 @@
 package binarySearchTree
 
+import (
+	"fmt"
+)
+
 //Node 是binary search tree所有方法的集合
 type Node interface {
 	Size() int
@@ -47,6 +51,29 @@ func (n *node) Size() int {
 	return n.n
 }
 
+func (n *node) Put(key Comparer, value interface{}) {
+	if n == nil {
+		n = &node{
+			key:   key,
+			value: value,
+			n:     1,
+		}
+		fmt.Printf("%p,%v,%v\n", n, key, value)
+		return
+	}
+
+	cmp := key.CompareTo(n.key)
+	switch {
+	case cmp < 0:
+		n.left.Put(key, value)
+	case cmp > 0:
+		n.right.Put(key, value)
+	default:
+		n.value = value
+	}
+	n.n = n.left.Size() + n.right.Size() + 1
+}
+
 func (n *node) Get(key Comparer) interface{} {
 	if n == nil {
 		return nil
@@ -60,24 +87,6 @@ func (n *node) Get(key Comparer) interface{} {
 	default:
 		return n.value
 	}
-}
-
-func (n *node) Put(key Comparer, value interface{}) {
-	if n == nil {
-		n = New(key, value).(*node)
-	}
-
-	cmp := key.CompareTo(n.key)
-	switch {
-	case cmp < 0:
-		n.left.Put(key, value)
-	case cmp > 0:
-		n.right.Put(key, value)
-	default:
-		n.value = value
-	}
-
-	n.n = n.left.Size() + n.right.Size() + 1
 }
 
 func (n *node) MinKey() interface{} {
