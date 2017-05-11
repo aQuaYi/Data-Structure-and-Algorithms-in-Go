@@ -293,23 +293,148 @@ func Test_Rank(t *testing.T) {
 }
 
 func Test_DeletMin(t *testing.T) {
-	ics := []intComparable{5, 3, 7}
+	ics := []intComparable{5, 2, 1, 4, 3, 8, 6, 9, 7}
 	tb := New()
 	for i := 0; i < len(ics); i++ {
-		tb.Put(ics[i], i)
+		tb.Put(ics[i], 0)
 	}
 
-	test5 := &node{key: intComparable(5), value: 0, n: 1}
-	test7 := &node{
-		key:   intComparable(7),
-		value: 2, 
-		n:     1,
+	iAnss := [][]intComparable{
+		[]intComparable{5, 2, 4, 3, 8, 6, 9, 7},
+		[]intComparable{5, 4, 3, 8, 6, 9, 7},
+		[]intComparable{5, 4, 8, 6, 9, 7},
+		[]intComparable{5, 8, 6, 9, 7},
+		[]intComparable{8, 6, 9, 7},
+		[]intComparable{8, 9, 7},
+		[]intComparable{8, 9},
+		[]intComparable{9},
+		[]intComparable{},
 	}
-	test5.right = test7
-	test5.n = 2
 
+	for i := 0; i < len(iAnss); i++ {
+		ta := New()
+		for j := 0; j < len(iAnss[i]); j++ {
+			ta.Put(iAnss[i][j], 0)
+		}
+		tb.DeleteMin()
+		tbRoot := tb.(*binarySearchTree).root
+		taRoot := ta.(*binarySearchTree).root
+		if !tbRoot.equals(taRoot) {
+			t.Error("deleteMin后的数据不对。")
+		}
+	}
+
+	tb.DeleteMin() //nil.DeleteMin
 	tbRoot := tb.(*binarySearchTree).root
-	if !tbRoot.equals(test5) {
-		t.Error("")
+	if !tbRoot.equals(nil) {
+		t.Error("nil.DeleteMin后的BST不对")
+	}
+}
+
+func Test_DeletMax(t *testing.T) {
+	ics := []intComparable{5, 2, 1, 4, 3, 8, 6, 9, 7}
+	tb := New()
+	for i := 0; i < len(ics); i++ {
+		tb.Put(ics[i], 0)
+	}
+
+	iAnss := [][]intComparable{
+		[]intComparable{5, 2, 1, 4, 3, 8, 6, 7},
+		[]intComparable{5, 2, 1, 4, 3, 6, 7},
+		[]intComparable{5, 2, 1, 4, 3, 6},
+		[]intComparable{5, 2, 1, 4, 3},
+		[]intComparable{2, 1, 4, 3},
+		[]intComparable{2, 1, 3},
+		[]intComparable{2, 1},
+		[]intComparable{1},
+		[]intComparable{},
+	}
+
+	for i := 0; i < len(iAnss); i++ {
+		ta := New()
+		for j := 0; j < len(iAnss[i]); j++ {
+			ta.Put(iAnss[i][j], 0)
+		}
+		tb.DeleteMax()
+		tbRoot := tb.(*binarySearchTree).root
+		taRoot := ta.(*binarySearchTree).root
+		if !tbRoot.equals(taRoot) {
+			t.Error("deleteMin后的数据不对。")
+		}
+	}
+
+	tb.DeleteMax() //nil.DeleteMax
+	tbRoot := tb.(*binarySearchTree).root
+	if !tbRoot.equals(nil) {
+		t.Error("nil.DeleteMax后的BST不对")
+	}
+}
+
+func Test_deleteRoot(t *testing.T) {
+	ics := []intComparable{0, 5, 2, 1, 4, 3, 8, 6, 9, 7}
+	tb := New()
+	for i := 0; i < len(ics); i++ {
+		tb.Put(ics[i], 0)
+	}
+	tbRoot := tb.(*binarySearchTree).root
+
+	iAnss := [][]intComparable{
+		[]intComparable{5, 2, 1, 4, 3, 8, 6, 9, 7},
+		[]intComparable{6, 2, 1, 4, 3, 8, 7, 9},
+		[]intComparable{7, 2, 1, 4, 3, 8, 9},
+		[]intComparable{8, 2, 1, 4, 3, 9},
+		[]intComparable{9, 2, 1, 4, 3},
+		[]intComparable{2, 1, 4, 3},
+		[]intComparable{3, 1, 4},
+		[]intComparable{4, 1},
+		[]intComparable{1},
+		[]intComparable{},
+	}
+
+	for i := 0; i < len(iAnss); i++ {
+		ta := New()
+		for j := 0; j < len(iAnss[i]); j++ {
+			ta.Put(iAnss[i][j], 0)
+		}
+		tbRoot = deleteRoot(tbRoot)
+		taRoot := ta.(*binarySearchTree).root
+		if !tbRoot.equals(taRoot) {
+			t.Error(i, "deleteRoot后的数据不对。")
+		}
+	}
+
+	//deleteRoot(nil)
+	tbRoot = deleteRoot(tbRoot)
+	if !tbRoot.equals(nil) {
+		t.Error("deleteRoot(nil)后的BST不对")
+	}
+}
+
+func Test_delete(t *testing.T) {
+	ics := []intComparable{5, 2, 1, 4, 3, 8, 6, 9, 7}
+	tb := New()
+	for i := 0; i < len(ics); i++ {
+		tb.Put(ics[i], 0)
+	}
+	tbRoot := tb.(*binarySearchTree).root
+
+	iDelete := []intComparable{2, 8, 0}
+
+	iAnss := [][]intComparable{
+		[]intComparable{5, 3, 1, 4, 8, 6, 9, 7},
+		[]intComparable{5, 3, 1, 4, 9, 6, 7},
+		[]intComparable{5, 3, 1, 4, 9, 6, 7},
+	}
+
+	for i := 0; i < len(iDelete); i++ {
+		ta := New()
+		for j := 0; j < len(iAnss[i]); j++ {
+			ta.Put(iAnss[i][j], 0)
+		}
+		tbRoot = delete(tbRoot, iDelete[i])
+		taRoot := ta.(*binarySearchTree).root
+		if !tbRoot.equals(taRoot) {
+			t.Error(i, "delete后的数据不对。")
+		}
 	}
 }

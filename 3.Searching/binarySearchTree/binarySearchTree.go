@@ -254,6 +254,10 @@ func (b *binarySearchTree) DeleteMin() {
 }
 
 func deleteMin(n *node) *node {
+	if n == nil {
+		return nil
+	}
+
 	if n.left == nil {
 		return n.right
 	}
@@ -268,6 +272,10 @@ func (b *binarySearchTree) DeleteMax() {
 }
 
 func deleteMax(n *node) *node {
+	if n == nil {
+		return nil
+	}
+
 	if n.right == nil {
 		return n.left
 	}
@@ -289,12 +297,14 @@ func delete(n *node, key Comparer) *node {
 	cmp := key.CompareTo(n.key)
 	switch {
 	case cmp < 0:
-		return delete(n.left, key)
+		n.left = delete(n.left, key)
 	case cmp > 0:
-		return delete(n.right, key)
+		n.right = delete(n.right, key)
 	default:
-		return deleteRoot(n)
+		n = deleteRoot(n)
 	}
+	n.n = size(n.left) + size(n.right) + 1
+	return n
 }
 
 func deleteRoot(n *node) *node {
@@ -310,10 +320,9 @@ func deleteRoot(n *node) *node {
 	default:
 		t := n
 		n = min(n.right)
-		n.left = t.left
 		n.right = deleteMin(t.right)
+		n.left = t.left
+		n.n = size(n.left) + size(n.right) + 1
+		return n
 	}
-
-	n.n = size(n.left) + size(n.right) + 1
-	return n
 }
