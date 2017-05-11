@@ -321,7 +321,7 @@ func deleteRoot(n *node) *node {
 		t := n
 		n = min(n.right)
 		n.right = deleteMin(t.right)
-		n.left = t.left
+		n.left = t.left //TODO: 这一行和上一行不能互换，想想为什么？
 		n.n = size(n.left) + size(n.right) + 1
 		return n
 	}
