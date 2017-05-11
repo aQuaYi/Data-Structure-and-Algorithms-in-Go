@@ -9,11 +9,11 @@ type BST interface {
 	DeleteMax()
 	DeleteMin()
 	Rank(Comparer) int
-	Select(int) interface{}
-	Floor(Comparer) interface{}
-	Ceiling(Comparer) interface{}
-	MaxKey() interface{}
-	MinKey() interface{}
+	Select(int) Comparer
+	Floor(Comparer) Comparer
+	Ceiling(Comparer) Comparer
+	Max() Comparer
+	Min() Comparer
 }
 
 //Comparer 规定了元素的可比较性
@@ -104,7 +104,7 @@ func get(n *node, key Comparer) interface{} {
 }
 
 //Min retruns the minimum key of binary search tree
-func (b *binarySearchTree) Min() interface{} {
+func (b *binarySearchTree) Min() Comparer {
 	return min(b.root).key
 }
 
@@ -121,7 +121,7 @@ func min(n *node) *node {
 }
 
 //Max returns the maximum key of binary search tree
-func (b *binarySearchTree) Max() interface{} {
+func (b *binarySearchTree) Max() Comparer {
 	return max(b.root).key
 }
 
@@ -137,7 +137,7 @@ func max(n *node) *node {
 	return max(n.right)
 }
 
-func (b *binarySearchTree) Floor(key Comparer) interface{} {
+func (b *binarySearchTree) Floor(key Comparer) Comparer {
 	x := floor(b.root, key)
 	if x == nil {
 		return nil
@@ -166,7 +166,7 @@ func floor(n *node, key Comparer) *node {
 	}
 }
 
-func (b *binarySearchTree) Ceiling(key Comparer) interface{} {
+func (b *binarySearchTree) Ceiling(key Comparer) Comparer {
 	x := ceiling(b.root, key)
 	if x == nil {
 		return nil
@@ -196,7 +196,7 @@ func ceiling(n *node, key Comparer) *node {
 }
 
 //Select  returns [k]'s key
-func (b *binarySearchTree) Select(k int) interface{} {
+func (b *binarySearchTree) Select(k int) Comparer {
 	x := selecting(b.root, k)
 	if x == nil {
 		return nil
