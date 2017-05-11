@@ -105,7 +105,11 @@ func get(n *node, key Comparer) interface{} {
 
 //Min retruns the minimum key of binary search tree
 func (b *binarySearchTree) Min() Comparer {
-	return min(b.root).key
+	x := min(b.root)
+	if x == nil {
+		return nil
+	}
+	return x.key
 }
 
 func min(n *node) *node {
@@ -122,7 +126,11 @@ func min(n *node) *node {
 
 //Max returns the maximum key of binary search tree
 func (b *binarySearchTree) Max() Comparer {
-	return max(b.root).key
+	x := max(b.root)
+	if x == nil {
+		return nil
+	}
+	return x.key
 }
 
 func max(n *node) *node {
@@ -215,7 +223,7 @@ func selecting(n *node, k int) *node {
 	case t > k:
 		return selecting(n.left, k)
 	case t < k:
-		return selecting(n.left, k-t-1)
+		return selecting(n.right, k-t-1)
 	default:
 		return n
 	}
