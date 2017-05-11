@@ -1,11 +1,7 @@
 package binarySearchTree
 
-import (
-	"fmt"
-)
-
-//Node 是binary search tree所有方法的集合
-type Node interface {
+//BST 是binary search tree所有方法的集合
+type BST interface {
 	Size() int
 	Put(Comparer, interface{})
 	Get(Comparer) interface{}
@@ -31,12 +27,15 @@ type Comparer interface {
 type node struct {
 	key         Comparer
 	value       interface{}
-	left, right *node
 	n           int
+	left, right *node
 }
 
-//New 返回新结点
-func New(key Comparer, value interface{}) Node {
+type binarySearchTree struct {
+	root *node
+}
+
+func newNode(key Comparer, value interface{}) *node {
 	return &node{
 		key:   key,
 		value: value,
@@ -44,80 +43,110 @@ func New(key Comparer, value interface{}) Node {
 	}
 }
 
-func (n *node) Size() int {
+//New 返回符合BST接口的数据
+func New() BST {
+	return &binarySearchTree{
+		root: nil,
+	}
+}
+
+func (b *binarySearchTree) Size() int {
+	return size(b.root)
+}
+
+func size(n *node) int {
 	if n == nil {
 		return 0
 	}
 	return n.n
 }
 
-func (n *node) Put(key Comparer, value interface{}) {
+func (b *binarySearchTree) Put(key Comparer, value interface{}) {
+	b.root = put(b.root, key, value)
+}
+
+func put(n *node, key Comparer, value interface{}) *node {
 	if n == nil {
-		n = &node{
-			key:   key,
-			value: value,
-			n:     1,
-		}
-		fmt.Printf("%p,%v,%v\n", n, key, value)
-		return
+		return newNode(key, value)
 	}
 
 	cmp := key.CompareTo(n.key)
 	switch {
 	case cmp < 0:
-		n.left.Put(key, value)
+		n.left = put(n.left, key, value)
 	case cmp > 0:
-		n.right.Put(key, value)
+		n.right = put(n.right, key, value)
 	default:
 		n.value = value
 	}
-	n.n = n.left.Size() + n.right.Size() + 1
+	n.n = size(n.left) + size(n.right) + 1
+	return n
 }
 
-func (n *node) Get(key Comparer) interface{} {
+func (b *binarySearchTree) Get(key Comparer) interface{} {
+	return get(b.root, key)
+}
+
+func get(n *node, key Comparer) interface{} {
 	if n == nil {
 		return nil
 	}
+
 	cmp := key.CompareTo(n.key)
 	switch {
 	case cmp < 0:
-		return n.left.Get(key)
+		return get(n.left, key)
 	case cmp > 0:
-		return n.right.Get(key)
+		return get(n.right, key)
 	default:
 		return n.value
 	}
 }
 
-func (n *node) MinKey() interface{} {
-	return n.min().key
+//Min retruns the minimum key of binary search tree
+func (b *binarySearchTree) Min() interface{} {
+	return min(b.root).key
 }
 
-func (n *node) min() *node {
+func min(n *node) *node {
 	if n == nil {
 		return nil
 	}
+
 	if n.left == nil {
 		return n
 	}
-	return n.left.min()
+
+	return min(n.left)
 }
 
-func (n *node) MaxKey() interface{} {
-	return n.max().key
+//Max returns the maximum key of binary search tree
+func (b *binarySearchTree) Max() interface{} {
+	return max(b.root).key
 }
 
-func (n *node) max() *node {
+func max(n *node) *node {
 	if n == nil {
 		return nil
 	}
+
 	if n.right == nil {
 		return n
 	}
-	return n.right.max()
+
+	return max(n.right)
 }
 
-func (n *node) Floor(key Comparer) interface{} {
+func (b *binarySearchTree) Floor(key Comparer) interface{} {
+	x := floor(b.root, key)
+	if x == nil {
+		return nil
+	}
+
+	return x.key
+}
+
+func floor(n *node, key Comparer) *node {
 	if n == nil {
 		return nil
 	}
@@ -125,19 +154,28 @@ func (n *node) Floor(key Comparer) interface{} {
 	cmp := key.CompareTo(n.key)
 	switch {
 	case cmp == 0:
-		return n.key
+		return n
 	case cmp < 0:
-		return n.left.Floor(key)
+		return floor(n.left, key)
 	default:
-		t := n.right.Floor(key)
+		t := floor(n.right, key)
 		if t != nil {
 			return t
 		}
-		return n.key
+		return n
 	}
 }
 
-func (n *node) Ceiling(key Comparer) interface{} {
+func (b *binarySearchTree) Ceiling(key Comparer) interface{} {
+	x := ceiling(b.root, key)
+	if x == nil {
+		return nil
+	}
+
+	return x.key
+}
+
+func ceiling(n *node, key Comparer) *node {
 	if n == nil {
 		return nil
 	}
@@ -145,35 +183,49 @@ func (n *node) Ceiling(key Comparer) interface{} {
 	cmp := key.CompareTo(n.key)
 	switch {
 	case cmp == 0:
-		return n.key
+		return n
 	case cmp > 0:
-		return n.right.Floor(key)
+		return ceiling(n.right, key)
 	default:
-		t := n.left.Floor(key)
+		t := ceiling(n.left, key)
 		if t != nil {
 			return t
 		}
-		return n.key
+		return n
 	}
 }
 
-func (n *node) Select(k int) interface{} {
+//Select  returns [k]'s key
+func (b *binarySearchTree) Select(k int) interface{} {
+	x := selecting(b.root, k)
+	if x == nil {
+		return nil
+	}
+	return x.key
+}
+
+//Return Node containing key of rank k
+func selecting(n *node, k int) *node {
 	if n == nil {
 		return nil
 	}
 
-	t := n.Size()
+	t := size(n.left)
 	switch {
 	case t > k:
-		return n.left.Select(k)
+		return selecting(n.left, k)
 	case t < k:
-		return n.left.Select(k - t - 1)
+		return selecting(n.left, k-t-1)
 	default:
-		return n.key
+		return n
 	}
 }
 
-func (n *node) Rank(key Comparer) int {
+func (b *binarySearchTree) Rank(key Comparer) int {
+	return rank(key, b.root)
+}
+
+func rank(key Comparer, n *node) int {
 	if n == nil {
 		return 0
 	}
@@ -181,65 +233,79 @@ func (n *node) Rank(key Comparer) int {
 	cmp := key.CompareTo(n.key)
 	switch {
 	case cmp < 0:
-		return n.left.Rank(key)
+		return rank(key, n.left)
 	case cmp > 0:
-		return 1 + n.left.Size() + n.right.Rank(key)
+		return 1 + size(n.left) + rank(key, n.right)
 	default:
-		return n.left.Size()
+		return size(n.left)
 	}
 }
 
-func (n *node) DeleteMin() {
+func (b *binarySearchTree) DeleteMin() {
+	b.root = deleteMin(b.root)
+}
+
+func deleteMin(n *node) *node {
 	if n.left == nil {
-		n = n.right
+		return n.right
 	}
 
-	n.left.DeleteMin()
-	n.n = n.left.Size() + n.right.Size() + 1
+	n.left = deleteMin(n.left)
+	n.n = size(n.left) + size(n.right) + 1
+	return n
 }
 
-func (n *node) DeleteMax() {
+func (b *binarySearchTree) DeleteMax() {
+	b.root = deleteMax(b.root)
+}
+
+func deleteMax(n *node) *node {
 	if n.right == nil {
-		n = n.left
+		return n.left
 	}
 
-	n.right.DeleteMax()
-	n.n = n.left.Size() + n.right.Size() + 1
+	n.right = deleteMax(n.right)
+	n.n = size(n.left) + size(n.right) + 1
+	return n
 }
 
-func (n *node) Delete(key Comparer) {
+func (b *binarySearchTree) Delete(key Comparer) {
+	b.root = delete(b.root, key)
+}
+
+func delete(n *node, key Comparer) *node {
 	if n == nil {
-		return
+		return nil
 	}
 
 	cmp := key.CompareTo(n.key)
 	switch {
 	case cmp < 0:
-		n.left.Delete(key)
+		return delete(n.left, key)
 	case cmp > 0:
-		n.right.Delete(key)
+		return delete(n.right, key)
 	default:
-		n.deleteRoot()
+		return deleteRoot(n)
 	}
-
 }
 
-func (n *node) deleteRoot() {
+func deleteRoot(n *node) *node {
 	if n == nil {
-		return
+		return nil
 	}
 
 	switch {
 	case n.left == nil:
-		n = n.right
+		return n.right
 	case n.right == nil:
-		n = n.left
+		return n.left
 	default:
 		t := n
-		n = n.right.min()
+		n = min(n.right)
 		n.left = t.left
-		t.right.DeleteMin()
-		n.right = t.right
+		n.right = deleteMin(t.right)
 	}
-	n.n = n.left.Size() + n.right.Size() + 1
+
+	n.n = size(n.left) + size(n.right) + 1
+	return n
 }
