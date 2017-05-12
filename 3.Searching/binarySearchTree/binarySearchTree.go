@@ -17,10 +17,10 @@ type BST interface {
 }
 
 //Comparer 规定了元素的可比较性
+//a.CompareTo(b) < 0  ===> a < b
+//a.CompareTo(b) == 0 ===> a == b
+//a.CompareTo(b) > 0  ===> a > b
 type Comparer interface {
-	//a.CompareTo(b) < 0  ===> a < b
-	//a.CompareTo(b) == 0 ===> a == b
-	//a.CompareTo(b) > 0  ===> a > b
 	CompareTo(Comparer) int
 }
 
@@ -66,6 +66,7 @@ func (b *binarySearchTree) Put(key Comparer, value interface{}) {
 }
 
 func put(n *node, key Comparer, value interface{}) *node {
+	//没有找到对应的key，就生成新node
 	if n == nil {
 		return newNode(key, value)
 	}
@@ -77,13 +78,16 @@ func put(n *node, key Comparer, value interface{}) *node {
 	case cmp > 0:
 		n.right = put(n.right, key, value)
 	default:
+		//找到了对应的key，就更新value
 		n.value = value
 	}
 
+	//更新node的计数
 	n.n = size(n.left) + size(n.right) + 1
 	return n
 }
 
+//Get 获取对应key的value
 func (b *binarySearchTree) Get(key Comparer) interface{} {
 	return get(b.root, key)
 }
@@ -107,9 +111,11 @@ func get(n *node, key Comparer) interface{} {
 //Min retruns the minimum key of binary search tree
 func (b *binarySearchTree) Min() Comparer {
 	x := min(b.root)
+
 	if x == nil {
 		return nil
 	}
+
 	return x.key
 }
 
@@ -128,9 +134,11 @@ func min(n *node) *node {
 //Max returns the maximum key of binary search tree
 func (b *binarySearchTree) Max() Comparer {
 	x := max(b.root)
+
 	if x == nil {
 		return nil
 	}
+
 	return x.key
 }
 
@@ -146,8 +154,10 @@ func max(n *node) *node {
 	return max(n.right)
 }
 
+//Floor 返回不大于key的b的最大key
 func (b *binarySearchTree) Floor(key Comparer) Comparer {
 	x := floor(b.root, key)
+
 	if x == nil {
 		return nil
 	}
@@ -167,10 +177,13 @@ func floor(n *node, key Comparer) *node {
 	case cmp < 0:
 		return floor(n.left, key)
 	default:
+		//key > n.key时
 		t := floor(n.right, key)
 		if t != nil {
+			//右侧存在t.key<key时，才返回t
 			return t
 		}
+		//否侧，返回n
 		return n
 	}
 }
@@ -196,20 +209,26 @@ func ceiling(n *node, key Comparer) *node {
 	case cmp > 0:
 		return ceiling(n.right, key)
 	default:
+		//key < n.key时
 		t := ceiling(n.left, key)
 		if t != nil {
+			//左侧存在key<t.key时，返回t
 			return t
 		}
+		//否侧，返回n
 		return n
 	}
 }
 
-//Select  returns [k]'s key
+//Select  returns BST[k]'s key
+//返回某个key，BST中key小的键有k个
 func (b *binarySearchTree) Select(k int) Comparer {
 	x := selecting(b.root, k)
+
 	if x == nil {
 		return nil
 	}
+
 	return x.key
 }
 
@@ -230,6 +249,7 @@ func selecting(n *node, k int) *node {
 	}
 }
 
+//Rank 返回比key小的键的个数。
 func (b *binarySearchTree) Rank(key Comparer) int {
 	return rank(key, b.root)
 }
@@ -265,6 +285,7 @@ func deleteMin(n *node) *node {
 
 	n.left = deleteMin(n.left)
 	n.n = size(n.left) + size(n.right) + 1
+
 	return n
 }
 
@@ -309,7 +330,7 @@ func delete(n *node, key Comparer) *node {
 }
 
 func deleteRoot(n *node) *node {
-	if n == nil { //如果deleteRoot只是用在delete中，可以不写这个if语句的。但是为了通用性，我还是决定谢了。
+	if n == nil { //如果deleteRoot只是用在delete中，可以不写这个if语句的。但是为了通用性，还是写了。
 		return nil
 	}
 

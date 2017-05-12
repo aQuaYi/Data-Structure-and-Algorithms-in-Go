@@ -169,6 +169,11 @@ func Test_Get(t *testing.T) {
 			t.Error("无法Get到正确的value")
 		}
 	}
+
+	g := tb.Get(intComparable(0))
+	if g != nil {
+		t.Error("Get不存在的key时，没有返回nil")
+	}
 }
 
 func Test_Min(t *testing.T) {
@@ -410,13 +415,12 @@ func Test_deleteRoot(t *testing.T) {
 	}
 }
 
-func Test_delete(t *testing.T) {
+func Test_Delete(t *testing.T) {
 	ics := []intComparable{5, 2, 1, 4, 3, 8, 6, 9, 7}
 	tb := New()
 	for i := 0; i < len(ics); i++ {
 		tb.Put(ics[i], 0)
 	}
-	tbRoot := tb.(*binarySearchTree).root
 
 	iDelete := []intComparable{2, 8, 0}
 
@@ -431,7 +435,8 @@ func Test_delete(t *testing.T) {
 		for j := 0; j < len(iAnss[i]); j++ {
 			ta.Put(iAnss[i][j], 0)
 		}
-		tbRoot = delete(tbRoot, iDelete[i])
+		tb.Delete(iDelete[i])
+		tbRoot := tb.(*binarySearchTree).root
 		taRoot := ta.(*binarySearchTree).root
 		if !tbRoot.equals(taRoot) {
 			t.Error(i, "delete后的数据不对。")
