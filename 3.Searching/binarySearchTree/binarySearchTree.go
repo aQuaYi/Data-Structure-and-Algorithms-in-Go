@@ -79,6 +79,7 @@ func put(n *node, key Comparer, value interface{}) *node {
 	default:
 		n.value = value
 	}
+
 	n.n = size(n.left) + size(n.right) + 1
 	return n
 }
@@ -308,7 +309,7 @@ func delete(n *node, key Comparer) *node {
 }
 
 func deleteRoot(n *node) *node {
-	if n == nil {
+	if n == nil { //如果deleteRoot只是用在delete中，可以不写这个if语句的。但是为了通用性，我还是决定谢了。
 		return nil
 	}
 
@@ -318,10 +319,11 @@ func deleteRoot(n *node) *node {
 	case n.right == nil:
 		return n.left
 	default:
+		//删除root后，把右侧的最小值作为新的root
 		t := n
 		n = min(n.right)
 		n.right = deleteMin(t.right)
-		n.left = t.left //TODO: 这一行和上一行不能互换，想想为什么？
+		n.left = t.left //这一行和上一行不能互换，想想为什么？
 		n.n = size(n.left) + size(n.right) + 1
 		return n
 	}
