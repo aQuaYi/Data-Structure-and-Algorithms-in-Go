@@ -1,4 +1,4 @@
-* 数据结构与算法（Go 语言版）
+* 数据结构与算法（Go语言版）
 
 本项目收集了常见的数据结构与算法，以 Go 语言实现。
 
@@ -8,3 +8,4 @@
 ** 参考资料
 - [[https://book.douban.com/subject/19952400/][算法（第4版）]] [[file:Solutions/Algorithms4E/README.org][习题解答]]
 - [[https://book.douban.com/subject/25859528/][数据结构]] [[file:Solutions/DataStructure3E/README.org][习题解答]]
+  
